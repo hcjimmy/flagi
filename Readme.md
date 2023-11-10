@@ -13,10 +13,10 @@ Flag library which intentionally ignores invalid flags in most cases (I wrote th
 
 Only one function `flagger`, is provided. To use it you need to give it arrays of the 4 structs provided:
 
-- Boolean one-flags.
-- Boolean two-flags.
-- Arg one-flags.
-- Arg two-flags.
+- `BoolOneFlag` Boolean receiving, one-dash flag.
+- `BoolTwoFlag` Boolean receiving, two-dash flag.
+- `ArgOneFlag` Arg receiving, one-dash flags.
+- `ArgTwoFlag` Arg receiving, two-dash flags.
 
 Each struct contains a value to indicating the what the flag is, and a pointer to modify if the flag occurred: either a boolean or a string for the arg after the flag.
 

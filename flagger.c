@@ -92,7 +92,7 @@ void report_missing_arg(char flag1)
  */
 short parse_one_flag(char flag, char *next_arg, bool *parsed_next, bool unknown_flag_is_invalid,
 		BoolOneFlag *bool_ones, BoolOneFlag *negative_ones,
-		ArgOneFlag *arg_ones)
+		ArgOneFlag *arg_ones, const char* error_suffix)
 {
 	BoolOneFlag *bool_one_match;
 	ArgOneFlag *arg_one_match;
@@ -107,7 +107,8 @@ short parse_one_flag(char flag, char *next_arg, bool *parsed_next, bool unknown_
 
 		// If we already parsed the following value.
 		if(*parsed_next) {
-			fprintf(stderr, "Error: multiple flags given the same arg '%s'\n", next_arg);
+			fprintf(stderr, "Error: multiple flags given the same arg '%s'. %s\n",
+					next_arg, error_suffix);
 			return -1;
 		}
 
@@ -122,7 +123,7 @@ short parse_one_flag(char flag, char *next_arg, bool *parsed_next, bool unknown_
 	} else {
 		// Uknown flag.
 		if(unknown_flag_is_invalid) {
-			fprintf(stderr, "Error: unknown flag given -%c\n", flag);
+			fprintf(stderr, "Error: unknown flag given -%c. %s\n", flag, error_suffix);
 			return -1;
 		}
 		return 1;
@@ -134,7 +135,7 @@ short parse_one_flag(char flag, char *next_arg, bool *parsed_next, bool unknown_
 bool flagger(char **argv, bool *parsed,
 		BoolOneFlag *bool_ones, BoolTwoFlag *bool_twos,
 		ArgOneFlag *arg_ones, ArgTwoFlag *arg_twos,
-		BoolOneFlag *negative_ones, BoolTwoFlag *negative_twos)
+		BoolOneFlag *negative_ones, BoolTwoFlag *negative_twos, const char *error_suffix)
 {
 
 	BoolTwoFlag *bool_two_match;
@@ -164,8 +165,8 @@ bool flagger(char **argv, bool *parsed,
 			else if((arg_two_match = match_arg_twos(*argv + 2, arg_twos))) {
 
 					if(++argv == NULL) {
-						fprintf(stderr, "Error: flag --%s needs an argument.\n",
-								arg_two_match->flag2);
+						fprintf(stderr, "Error: flag --%s needs an argument. %s\n",
+								arg_two_match->flag2, error_suffix);
 						return true;
 					}
 
@@ -184,7 +185,7 @@ bool flagger(char **argv, bool *parsed,
 		parsed_next = false;
 		arg = *argv + 1;
 
-		state = parse_one_flag(*arg, argv[1], &parsed_next, false, bool_ones, negative_ones, arg_ones);
+		state = parse_one_flag(*arg, argv[1], &parsed_next, false, bool_ones, negative_ones, arg_ones, error_suffix);
 
 		if(state < 0)	// Error occured.
 			return true;
@@ -193,7 +194,7 @@ bool flagger(char **argv, bool *parsed,
 			continue;
 
 		while(*++arg != '\0') {
-			if(parse_one_flag(*arg, argv[1], &parsed_next, true, bool_ones, negative_ones, arg_ones)) {
+			if(parse_one_flag(*arg, argv[1], &parsed_next, true, bool_ones, negative_ones, arg_ones, error_suffix)) {
 				return true;	// Error occured.
 			}
 		}
