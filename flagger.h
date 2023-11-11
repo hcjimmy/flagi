@@ -56,7 +56,8 @@ typedef struct {
  *
  * 	If two one-flags receive the same argument, an error is reported.
  * 	If a flag (any flag) receives a non-existant argument an error is reported.
- * 	After any error reported error_suffix is printed.
+ * 	After any error reported error_suffix is printed (without anything
+ * 	- not even newline - appended afterwards).
  *
  * If an arg is a non-existant two-flag (eg. "--option" but "option" is not a flag)
  * then the arg is ignored.

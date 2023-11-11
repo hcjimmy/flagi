@@ -107,7 +107,7 @@ short parse_one_flag(char flag, char *next_arg, bool *parsed_next, bool unknown_
 
 		// If we already parsed the following value.
 		if(*parsed_next) {
-			fprintf(stderr, "Error: multiple flags given the same arg '%s'. %s\n",
+			fprintf(stderr, "Error: multiple flags given the same arg '%s'. %s",
 					next_arg, error_suffix);
 			return -1;
 		}
@@ -123,7 +123,7 @@ short parse_one_flag(char flag, char *next_arg, bool *parsed_next, bool unknown_
 	} else {
 		// Uknown flag.
 		if(unknown_flag_is_invalid) {
-			fprintf(stderr, "Error: unknown flag given -%c. %s\n", flag, error_suffix);
+			fprintf(stderr, "Error: unknown flag given -%c. %s", flag, error_suffix);
 			return -1;
 		}
 		return 1;
@@ -165,7 +165,7 @@ bool flagger(char **argv, bool *parsed,
 			else if((arg_two_match = match_arg_twos(*argv + 2, arg_twos))) {
 
 					if(++argv == NULL) {
-						fprintf(stderr, "Error: flag --%s needs an argument. %s\n",
+						fprintf(stderr, "Error: flag --%s needs an argument. %s",
 								arg_two_match->flag2, error_suffix);
 						return true;
 					}
