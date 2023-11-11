@@ -56,8 +56,8 @@ typedef struct {
  *
  * 	If two one-flags receive the same argument, an error is reported.
  * 	If a flag (any flag) receives a non-existant argument an error is reported.
- * 	After any error reported error_suffix is printed (without anything
- * 	- not even newline - appended afterwards).
+ * 	After an error report *nothing is printed* - no even newline - this is so the
+ * 	caller could add their own message afterwards if desired.
  *
  * If an arg is a non-existant two-flag (eg. "--option" but "option" is not a flag)
  * then the arg is ignored.
@@ -75,6 +75,5 @@ typedef struct {
 bool flagger(char **argv, bool parsed[],
 		BoolOneFlag[], BoolTwoFlag[],
 		ArgOneFlag[], ArgTwoFlag[],
-		BoolOneFlag negative_ones[],BoolTwoFlag negative_twos[],
-		const char* error_suffix);
+		BoolOneFlag negative_ones[],BoolTwoFlag negative_twos[]);
 
