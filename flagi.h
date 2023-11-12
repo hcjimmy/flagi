@@ -43,6 +43,11 @@ typedef struct {
 /* Receive list of arguments (NULL terminated) and set modify flags to
  * in arrays (which are respectively NULL and '\0' terminated with the flag values).
  *
+ * Arguments which are either unknown two-dash flags (two-flags), or starting with an unknown
+ * one-flag, are ignored.
+ * More details below.
+ *
+ *
  * FlagOne arrays contain 1 character flags to be parsed in the form of "-a" or "-abc"
  * while FlagTwo arrays contain options which are parsed in the form of "--option".
  *
@@ -72,7 +77,7 @@ typedef struct {
  * Return value:
  * 	true in case of error occured, otherwise false.
  */
-bool flagger(char **argv, bool parsed[],
+bool flag_ignore(char **argv, bool parsed[],
 		BoolOneFlag[], BoolTwoFlag[],
 		ArgOneFlag[], ArgTwoFlag[],
 		BoolOneFlag negative_ones[],BoolTwoFlag negative_twos[]);

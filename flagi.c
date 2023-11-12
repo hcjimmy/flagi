@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#include "flagger.h"
+#include "flagi.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -132,7 +132,7 @@ short parse_one_flag(char flag, char *next_arg, bool *parsed_next, bool unknown_
 	return 0;
 }
 
-bool flagger(char **argv, bool *parsed,
+bool flag_ignore(char **argv, bool *parsed,
 		BoolOneFlag *bool_ones, BoolTwoFlag *bool_twos,
 		ArgOneFlag *arg_ones, ArgTwoFlag *arg_twos,
 		BoolOneFlag *negative_ones, BoolTwoFlag *negative_twos)
